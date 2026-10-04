@@ -1,8 +1,6 @@
 services:
   api:
     build: ./api
-    ports:
-      - "8000:8000"
     environment:
       - AUDIT_MAX_PAGES=${AUDIT_MAX_PAGES:-8}
       - AUDIT_TIMEOUT_MS=${AUDIT_TIMEOUT_MS:-15000}
@@ -11,6 +9,7 @@ services:
       - TOKEN_SECRET=${TOKEN_SECRET}
     volumes:
       - audit_data:/data
+
   worker:
     build: ./worker
     environment:
@@ -18,13 +17,16 @@ services:
       - AUDIT_TIMEOUT_MS=${AUDIT_TIMEOUT_MS:-15000}
     volumes:
       - audit_data:/data
+
   web:
     build: ./web
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NEXT_PUBLIC_API_URL=
+      - API_INTERNAL_URL=http://api:8000
     depends_on:
       - api
+
 volumes:
   audit_data:
