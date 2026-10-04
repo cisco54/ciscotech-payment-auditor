@@ -6,6 +6,9 @@ services:
     environment:
       - AUDIT_MAX_PAGES=${AUDIT_MAX_PAGES:-8}
       - AUDIT_TIMEOUT_MS=${AUDIT_TIMEOUT_MS:-15000}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-elnerro2024@gmail.com}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - TOKEN_SECRET=${TOKEN_SECRET}
     volumes:
       - audit_data:/data
   worker:
